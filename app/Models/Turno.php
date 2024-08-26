@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Turno extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['turno'];
+
+    public function escolaTurnos()
+    {
+        return $this->hasMany(VinculoEscola::class);
+    }
 }

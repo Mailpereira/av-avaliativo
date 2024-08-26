@@ -11,8 +11,8 @@ class localidade extends Model
 
     protected $fillable = ['localidade'];
 
-    public function turmas()
+    public function escolasLocalidade()
     {
-        return $this->hasMany(Turma::class);
+        return $this->hasMany(VinculoEscola::class);
     }
 }

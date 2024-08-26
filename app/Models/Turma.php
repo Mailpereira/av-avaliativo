@@ -9,10 +9,10 @@ class Turma extends Model
 {
     use HasFactory;
 
-    protected $filleble = ['turma', 'localidade_id'];
+    protected $filleble = ['turma'];
 
-    public function localidades()
+    public function escolasTurmas()
     {
-        return $this->belongsTo(localidade::class);
+        return $this->hasMany(VinculoEscola::class);
     }
 }
