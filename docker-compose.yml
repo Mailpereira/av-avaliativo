@@ -1,0 +1,48 @@
+services:
+    # image project
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        restart: unless-stopped
+        working_dir: /var/www/
+        volumes:
+            - ./:/var/www
+        networks:
+            - laravel
+
+    # nginx
+    nginx:
+        image: nginx:alpine
+        container_name: server_av_avaliativo_nginx_post
+        restart: unless-stopped
+        ports:
+            - "8000:80"
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx/:/etc/nginx/conf.d/
+        networks:
+            - laravel
+
+    # db postgres
+    db:
+        image: postgres:16.4
+        container_name: av_avaliativo_db_post
+        restart: unless-stopped
+        environment:
+          POSTGRES_DB: av-avaliativo-post
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: secret
+        volumes:
+            - .docker/pgdata:/var/lib/postgresql/data
+        ports:
+            - "5432:5432"
+        networks:
+            - laravel
+
+volumes:
+  pgdata:
+
+networks:
+    laravel:
+        driver: bridge
